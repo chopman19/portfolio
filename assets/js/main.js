@@ -33,41 +33,67 @@
   document.querySelectorAll(".reveal, .scribble").forEach((el) => io.observe(el));
 
   // On wide screens scrolling through the first screen turns the watch towards the visitor.
-  // On phones the watch loops: it turns to face you, rests, turns back and rests again.
+  // On phones the watch loops. Phones in power-saving mode refuse to autoplay, so the loop
+  // then starts on the first touch; with reduced motion it only plays when the watch is tapped.
   const hero = document.querySelector(".hero");
   const film = hero && hero.querySelector("video");
-  if (film && !reduceMotion) {
+  if (film) {
     const phone = window.matchMedia("(max-width: 900px)");
     const scrubSrc = "assets/img/faucon.mp4";
     const loopSrc = "assets/img/faucon-loop.mp4";
+    film.muted = true;
+    film.defaultMuted = true;
+    film.playsInline = true;
     let onScreen = true;
     let ticking = false;
-    const scrub = () => {
-      ticking = false;
-      if (!film.duration || !hero.classList.contains("is-scrub")) return;
-      const r = hero.getBoundingClientRect();
-      const p = Math.min(1, Math.max(0, -r.top / (r.height - window.innerHeight)));
-      film.currentTime = p * (film.duration - 0.05);
+    let waitingForTouch = false;
+
+    const useSrc = (src) => { if (!film.currentSrc.endsWith(src)) { film.src = src; film.load(); } };
+    const startOnTouch = () => {
+      if (waitingForTouch) return;
+      waitingForTouch = true;
+      const go = () => {
+        waitingForTouch = false;
+        ["touchend", "click", "keydown"].forEach((t) => document.removeEventListener(t, go));
+        if (film.loop && onScreen) film.play().catch(() => {});
+      };
+      ["touchend", "click", "keydown"].forEach((t) => document.addEventListener(t, go, { passive: true }));
     };
-    const setMode = () => {
-      const looping = phone.matches;
-      hero.classList.toggle("is-scrub", !looping);
-      film.loop = looping;
-      const src = looping ? loopSrc : scrubSrc;
-      if (!film.currentSrc.endsWith(src)) film.src = src;
-      if (looping && onScreen) film.play().catch(() => {});
-      else film.pause();
-      scrub();
-    };
-    new IntersectionObserver(([entry]) => {
-      onScreen = entry.isIntersecting;
-      if (!film.loop) return;
-      if (onScreen) film.play().catch(() => {}); else film.pause();
-    }).observe(film);
-    window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(scrub); } }, { passive: true });
-    film.addEventListener("loadedmetadata", scrub);
-    phone.addEventListener("change", setMode);
-    setMode();
+    const play = () => film.play().catch(startOnTouch);
+
+    if (reduceMotion) {
+      if (phone.matches) {
+        useSrc(loopSrc);
+        film.loop = true;
+        film.closest(".hero__watch").addEventListener("click", () => (film.paused ? play() : film.pause()));
+      }
+    } else {
+      const scrub = () => {
+        ticking = false;
+        if (!film.duration || !hero.classList.contains("is-scrub")) return;
+        const r = hero.getBoundingClientRect();
+        const p = Math.min(1, Math.max(0, -r.top / (r.height - window.innerHeight)));
+        film.currentTime = p * (film.duration - 0.05);
+      };
+      const setMode = () => {
+        const looping = phone.matches;
+        hero.classList.toggle("is-scrub", !looping);
+        film.loop = looping;
+        useSrc(looping ? loopSrc : scrubSrc);
+        if (looping && onScreen) play();
+        else film.pause();
+        scrub();
+      };
+      new IntersectionObserver(([entry]) => {
+        onScreen = entry.isIntersecting;
+        if (!film.loop) return;
+        if (onScreen) play(); else film.pause();
+      }).observe(film);
+      window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(scrub); } }, { passive: true });
+      film.addEventListener("loadedmetadata", scrub);
+      phone.addEventListener("change", setMode);
+      setMode();
+    }
   }
 
   const covers = document.querySelectorAll("[data-parallax]");
