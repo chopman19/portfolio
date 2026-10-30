@@ -32,21 +32,34 @@
   }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
   document.querySelectorAll(".reveal, .scribble").forEach((el) => io.observe(el));
 
-  // Scrolling through the first screen turns the watch towards the visitor.
+  // On wide screens scrolling through the first screen turns the watch towards the visitor.
+  // On phones the watch simply turns once when the page opens.
   const hero = document.querySelector(".hero");
   const film = hero && hero.querySelector("video");
   if (film && !reduceMotion) {
-    hero.classList.add("is-scrub");
+    const phone = window.matchMedia("(max-width: 900px)");
     let ticking = false;
     const scrub = () => {
       ticking = false;
-      if (!film.duration) return;
+      if (!film.duration || !hero.classList.contains("is-scrub")) return;
       const r = hero.getBoundingClientRect();
       const p = Math.min(1, Math.max(0, -r.top / (r.height - window.innerHeight)));
       film.currentTime = p * (film.duration - 0.05);
     };
+    const setMode = () => {
+      hero.classList.toggle("is-scrub", !phone.matches);
+      if (phone.matches) {
+        film.currentTime = 0;
+        film.play().catch(() => {});
+      } else {
+        film.pause();
+        scrub();
+      }
+    };
     window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(scrub); } }, { passive: true });
     film.addEventListener("loadedmetadata", scrub);
+    phone.addEventListener("change", setMode);
+    setMode();
   }
 
   const covers = document.querySelectorAll("[data-parallax]");
