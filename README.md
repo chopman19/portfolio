@@ -6,18 +6,22 @@ Static website (HTML/CSS/JS, no build step).
 index.html            Home: hero, projects, about, contact
 vingen.html           Thesis: premium horse trailer (Umesläp)
 normada.html          School project: 3D-printed room divider
-visualization.html    Personal product visualization (incl. the Faucon watch animation)
+visualization.html    Personal product visualization and the Faucon watch film
+404.html              Page shown for broken links (uses root paths, so it only works on the live host)
 assets/css/styles.css
 assets/js/main.js
-assets/img/           Images exported from the PDF portfolio (WebP) and faucon.mp4
+assets/img/           Renders (WebP), share images (og-*.jpg), watch films (faucon*.mp4)
 assets/Joel-Danson-Portfolio.pdf   Downloadable PDF
 ```
 
 ## Preview locally
-Open `index.html` in a browser.
+Open `index.html` in a browser. To preview `404.html`, serve the folder
+(`python -m http.server`) and open http://localhost:8000/404.html.
 
 ## Publish
-Upload the four `.html` files and the `assets/` folder. Leave out `.agents/`, `.claude/`,
-`.taste-skill/`, `skills-lock.json` and `assets/img/faucon_an.mp4` (the original film; the site
-uses the web copy `faucon.mp4`). Netlify Drop (https://app.netlify.com/drop), GitHub Pages, Vercel
-or Cloudflare Pages all work. Point joeldanson.com's DNS at the host when you're happy with it.
+Deploy the repository root. `.agents/`, `.claude/`, `.taste-skill/` and `skills-lock.json` are
+tool folders and are kept out of git by `.gitignore`. Netlify and GitHub Pages both pick up
+`404.html` automatically. Then point joeldanson.com (DNS at Namecheap) at the host.
+
+## Saved versions
+`git tag -n1` lists them; `git switch --detach <tag>` shows one, `git switch main` returns.

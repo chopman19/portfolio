@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found | Joel Danson</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f4f4f2">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="logo" href="/">Joel Danson</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="/#work">Work</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main" class="lost">
+    <button class="lost__lamp" type="button" aria-pressed="false" aria-label="Switch the lamp on">
+      <span class="lost__beam" aria-hidden="true"></span>
+      <img src="/assets/img/lamp-hero.webp" width="1200" height="1200" alt="">
+    </button>
+    <div class="lost__text">
+      <h1>Page not found</h1>
+      <p>The light is off on this page. The work is this way.</p>
+      <a class="btn" href="/">Back to the work</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <span>© <span data-year>2026</span> Joel Danson, industrial design engineer</span>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="/#work">Work</a>
+        <a href="/#about">About</a>
+        <a href="mailto:joel.o.danson@gmail.com">E-mail</a>
+        <a href="https://www.linkedin.com/in/joel-danson-b27b8b195/" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+  <script>
+    document.querySelector(".lost__lamp").addEventListener("click", (e) => {
+      const lamp = e.currentTarget;
+      const on = lamp.getAttribute("aria-pressed") !== "true";
+      lamp.setAttribute("aria-pressed", String(on));
+      lamp.setAttribute("aria-label", on ? "Switch the lamp off" : "Switch the lamp on");
+    });
+  </script>
+</body>
+</html>

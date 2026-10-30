@@ -315,3 +315,24 @@ button.gallery__item { cursor: zoom-in; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: .001ms !important; scroll-behavior: auto !important; }
 }
+
+/* ---------- 404: the lamp is off until someone switches it on ---------- */
+.lost { min-height: 100svh; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: center; gap: 2rem; padding: 6rem max(var(--pad), calc((100vw - var(--max)) / 2 + var(--pad))) 4rem; overflow: hidden; }
+.lost__lamp { position: relative; width: min(100%, 460px); padding: 0; cursor: pointer; }
+.lost__lamp img { position: relative; z-index: 2; width: 100%; transform: scaleX(-1); filter: saturate(.35) brightness(.92); transition: filter .25s ease; }
+.lost__lamp[aria-pressed="true"] img { filter: none; }
+.lost__beam {
+  position: absolute; z-index: 1; left: 61%; top: 39%; width: 260vw; height: 130vw;
+  transform-origin: 0 50%; transform: translateY(-50%) rotate(-4deg);
+  background: var(--orange); clip-path: polygon(0 48.6%, 100% 8%, 100% 92%, 0 51.4%);
+  opacity: 0; transition: opacity .2s ease; pointer-events: none;
+}
+.lost__lamp[aria-pressed="true"] .lost__beam { opacity: 1; }
+.lost__text { position: relative; z-index: 3; }
+.lost__text h1 { font-size: var(--fs-display); line-height: .9; }
+.lost__text p { font-size: var(--fs-lead); margin: 1.4rem 0 2.2rem; max-width: 32ch; }
+@media (max-width: 900px) {
+  .lost { grid-template-columns: 1fr; align-content: start; padding-top: 5.5rem; }
+  .lost__lamp { width: min(62vw, 320px); }
+  .lost__beam { top: 36%; transform: translateY(-50%) rotate(62deg); clip-path: polygon(0 48.6%, 100% 40%, 100% 60%, 0 51.4%); }
+}
