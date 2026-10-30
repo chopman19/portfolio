@@ -32,21 +32,49 @@
   }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
   document.querySelectorAll(".reveal, .scribble").forEach((el) => io.observe(el));
 
-  // Scrolling through the first screen turns the watch towards the visitor.
+  // Scrolling through the first screen turns the watch towards the visitor,
+  // drawn from a sequence of cut-out frames so it stands on the page itself.
   const hero = document.querySelector(".hero");
-  const film = hero && hero.querySelector("video");
-  if (film && !reduceMotion) {
+  const watch = hero && hero.querySelector("[data-frames]");
+  if (watch && !reduceMotion) {
     hero.classList.add("is-scrub");
+    const still = watch.querySelector("img");
+    const total = Number(watch.dataset.frames);
+    const frames = [];
+    const canvas = document.createElement("canvas");
+    canvas.width = still.width;
+    canvas.height = still.height;
+    canvas.setAttribute("role", "img");
+    canvas.setAttribute("aria-label", still.alt);
+    const ctx = canvas.getContext("2d");
+    let shown = -1;
     let ticking = false;
-    const scrub = () => {
-      ticking = false;
-      if (!film.duration) return;
+
+    const progress = () => {
       const r = hero.getBoundingClientRect();
-      const p = Math.min(1, Math.max(0, -r.top / (r.height - window.innerHeight)));
-      film.currentTime = p * (film.duration - 0.05);
+      return Math.min(1, Math.max(0, -r.top / (r.height - window.innerHeight)));
     };
-    window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(scrub); } }, { passive: true });
-    film.addEventListener("loadedmetadata", scrub);
+    const draw = () => {
+      ticking = false;
+      let i = Math.round(progress() * (total - 1));
+      while (i > 0 && !(frames[i] && frames[i].complete)) i--;
+      if (i === shown || !(frames[i] && frames[i].complete)) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(frames[i], 0, 0, canvas.width, canvas.height);
+      if (shown < 0) still.replaceWith(canvas);
+      shown = i;
+    };
+    const load = () => {
+      for (let n = 1; n <= total; n++) {
+        const img = new Image();
+        img.decoding = "async";
+        img.onload = () => { if (!ticking) { ticking = true; requestAnimationFrame(draw); } };
+        img.src = `${watch.dataset.path}${String(n).padStart(2, "0")}.webp`;
+        frames[n - 1] = img;
+      }
+    };
+    if (document.readyState === "complete") load(); else window.addEventListener("load", load);
+    window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(draw); } }, { passive: true });
   }
 
   const covers = document.querySelectorAll("[data-parallax]");
