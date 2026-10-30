@@ -1,12 +1,12 @@
-# Joel Danson — Portfolio
+# Joel Danson, portfolio
 
 Static website (HTML/CSS/JS, no build step).
 
 ```
 index.html            Home: hero, projects, about, contact
-vingen.html           01 · Thesis — premium horse trailer (Umesläp)
-normada.html          02 · School project — 3D-printed room divider
-visualization.html    03 · Personal product visualization (incl. the Faucon watch animation)
+vingen.html           Thesis: premium horse trailer (Umesläp)
+normada.html          School project: 3D-printed room divider
+visualization.html    Personal product visualization (incl. the Faucon watch animation)
 assets/css/styles.css
 assets/js/main.js
 assets/img/           Images exported from the PDF portfolio (WebP) and faucon.mp4
