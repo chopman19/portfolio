@@ -33,11 +33,14 @@
   document.querySelectorAll(".reveal, .scribble").forEach((el) => io.observe(el));
 
   // On wide screens scrolling through the first screen turns the watch towards the visitor.
-  // On phones the watch simply turns once when the page opens.
+  // On phones the watch loops: it turns to face you, rests, turns back and rests again.
   const hero = document.querySelector(".hero");
   const film = hero && hero.querySelector("video");
   if (film && !reduceMotion) {
     const phone = window.matchMedia("(max-width: 900px)");
+    const scrubSrc = "assets/img/faucon.mp4";
+    const loopSrc = "assets/img/faucon-loop.mp4";
+    let onScreen = true;
     let ticking = false;
     const scrub = () => {
       ticking = false;
@@ -47,15 +50,20 @@
       film.currentTime = p * (film.duration - 0.05);
     };
     const setMode = () => {
-      hero.classList.toggle("is-scrub", !phone.matches);
-      if (phone.matches) {
-        film.currentTime = 0;
-        film.play().catch(() => {});
-      } else {
-        film.pause();
-        scrub();
-      }
+      const looping = phone.matches;
+      hero.classList.toggle("is-scrub", !looping);
+      film.loop = looping;
+      const src = looping ? loopSrc : scrubSrc;
+      if (!film.currentSrc.endsWith(src)) film.src = src;
+      if (looping && onScreen) film.play().catch(() => {});
+      else film.pause();
+      scrub();
     };
+    new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      if (!film.loop) return;
+      if (onScreen) film.play().catch(() => {}); else film.pause();
+    }).observe(film);
     window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(scrub); } }, { passive: true });
     film.addEventListener("loadedmetadata", scrub);
     phone.addEventListener("change", setMode);
