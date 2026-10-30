@@ -5,13 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Vingen, premium horse trailer | Joel Danson</title>
   <meta name="description" content="Thesis project: a premium horse trailer concept developed with Umesläp, balancing aerodynamic performance, solo handling and equine wellbeing.">
-  <meta name="theme-color" content="#f5f1ea">
+  <meta name="theme-color" content="#f4f4f2">
   <meta property="og:title" content="Vingen, premium horse trailer | Joel Danson">
-  <meta property="og:image" content="assets/img/vingen-cover.webp">
+  <meta property="og:description" content="Thesis project for Umesläp: a premium horse trailer concept.">
+  <meta property="og:image" content="https://joeldanson.com/assets/img/vingen-cover.webp">
+  <meta property="og:url" content="https://joeldanson.com/vingen.html">
+  <meta property="og:type" content="article">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -19,11 +22,8 @@
 
   <header class="nav">
     <div class="wrap nav__inner">
-      <a class="logo" href="index.html" aria-label="Joel Danson, home">
-        <span class="logo__mark">JD</span>
-        <span>Joel Danson</span>
-      </a>
-      <button class="nav__toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span></button>
+      <a class="logo" href="index.html">Joel Danson</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
       <ul class="nav__links" id="nav-links">
         <li><a href="index.html#work" aria-current="page">Work</a></li>
         <li><a href="index.html#about">About</a></li>
@@ -35,119 +35,96 @@
   <main id="main">
     <section class="case-hero">
       <div class="wrap">
-        <a class="back mono" href="index.html#work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>All projects</a>
-        <div class="case-hero__top">
-          <div>
-            <h1 class="h-xl reveal" style="--d:.08s">Vingen</h1>
-          </div>
-        </div>
-        <p class="lede reveal" style="--d:.2s">The future of premium horse transport: a trailer concept that balances aerodynamic performance, solo handling and equine wellbeing, in a visual language that moves the brand forward.</p>
+        <a class="back" href="index.html#work">All projects</a>
+        <h1>Vingen</h1>
+        <p class="lede">The future of premium horse transport: a trailer concept that balances aerodynamic performance, solo handling and equine wellbeing, in a visual language that moves the brand forward.</p>
       </div>
     </section>
 
-    <div class="case-cover reveal">
+    <div class="case-cover">
       <div class="case-cover__img">
         <img data-parallax src="assets/img/vingen-cover.webp" width="1920" height="1080" alt="The Vingen horse trailer being towed along a city highway, motion-blurred background">
       </div>
     </div>
 
     <div class="wrap">
-      <dl class="facts reveal">
+      <dl class="facts">
         <div><dt>Client</dt><dd>Umesläp</dd></div>
         <div><dt>Type</dt><dd>Bachelor thesis, LTU, 2026</dd></div>
         <div><dt>Scope</dt><dd>Research, concept, CAD, renders and animation</dd></div>
         <div><dt>Tools</dt><dd>Autodesk Fusion, Fusion CFD, sketching, prototyping</dd></div>
       </dl>
 
-      <!-- Inspiration -->
-      <section class="chapter">
-        <div class="chapter__label reveal">
-          <h2 class="h-md">Inspiration</h2>
-        </div>
+      <section class="chapter" aria-labelledby="inspiration">
+        <div class="chapter__label"><h2 id="inspiration">Inspiration</h2></div>
         <div class="chapter__body">
-          <p class="reveal">The goal was to understand which problem areas exist and what needs and frustrations horse owners have. To get the clearest possible picture, the user was kept at the centre of the process.</p>
-          <p class="reveal">Interviews, observations and benchmarking surfaced six recurring pain points:</p>
-          <div class="insights">
-            <blockquote class="quote reveal"><span class="mono">Airflow</span>"My current trailer has bad air circulation."</blockquote>
-            <blockquote class="quote reveal" style="--d:.06s"><span class="mono">Weather</span>"The roof collects rain and snow."</blockquote>
-            <blockquote class="quote reveal" style="--d:.12s"><span class="mono">Safety</span>"My horse injures itself on offload."</blockquote>
-            <blockquote class="quote reveal" style="--d:.18s"><span class="mono">Handling</span>"It's stressful to handle the trailer when I'm alone."</blockquote>
-            <blockquote class="quote reveal" style="--d:.24s"><span class="mono">Loading</span>"My horse can't walk backwards."</blockquote>
-            <blockquote class="quote reveal" style="--d:.3s"><span class="mono">Climate</span>"I lack control of the environment in the trailer."</blockquote>
-          </div>
+          <p>The goal was to understand which problem areas exist and what needs and frustrations horse owners have. To get the clearest possible picture, the user was kept at the centre of the process.</p>
+          <p>Interviews, observations and benchmarking surfaced six recurring pain points:</p>
+          <ul class="quotes">
+            <li><blockquote>“My current trailer has bad air circulation.”</blockquote><span>Airflow</span></li>
+            <li><blockquote>“The roof collects rain and snow.”</blockquote><span>Weather</span></li>
+            <li><blockquote>“My horse injures itself on offload.”</blockquote><span>Safety</span></li>
+            <li><blockquote>“It’s stressful to handle the trailer when I’m alone.”</blockquote><span>Handling</span></li>
+            <li><blockquote>“My horse can’t walk backwards.”</blockquote><span>Loading</span></li>
+            <li><blockquote>“I lack control of the environment in the trailer.”</blockquote><span>Climate</span></li>
+          </ul>
         </div>
       </section>
 
-      <!-- Ideation -->
-      <section class="chapter">
-        <div class="chapter__label reveal">
-          <h2 class="h-md">Ideation</h2>
-        </div>
+      <section class="chapter" aria-labelledby="ideation">
+        <div class="chapter__label"><h2 id="ideation">Ideation</h2></div>
         <div class="chapter__body">
-          <p class="reveal">The ideation phase was about broadening the perspective and moving beyond what has already been done. Ideas were generated with structured methods, evaluated against one another and gradually narrowed down to a final concept.</p>
-          <div class="methods reveal">
-            <span class="chip chip--outline">Brainstorming</span>
-            <span class="chip chip--outline">Crazy 8s</span>
-            <span class="chip chip--outline">SCAMPER</span>
-            <span class="chip chip--outline">Concept evaluation</span>
-          </div>
+          <p>The ideation phase was about broadening the perspective and moving beyond what has already been done. Ideas were generated with structured methods, evaluated against one another and gradually narrowed down to a final concept.</p>
+          <p class="small">Methods: brainstorming, Crazy 8s, SCAMPER and concept evaluation.</p>
         </div>
       </section>
 
-      <div class="pinboard">
-        <figure class="pin pin--paper reveal" style="grid-column: 1 / span 7; transform: rotate(-2deg)">
+      <div class="sketches">
+        <figure class="reveal">
           <img src="assets/img/vingen-sketch-1.webp" width="1920" height="1080" loading="lazy" alt="Pencil form-giving sketches exploring trailer volumes, windows and ramp loading">
-          <figcaption class="mono">Form-giving explorations</figcaption>
+          <figcaption class="caption">Form-giving explorations</figcaption>
         </figure>
-        <figure class="pin pin--paper reveal" style="grid-column: 5 / span 8; margin-top: -6%; transform: rotate(1.5deg); --d:.1s">
+        <figure class="reveal">
           <img src="assets/img/vingen-sketch-2.webp" width="1920" height="1080" loading="lazy" alt="Ink sketches of four refined trailer concepts">
-          <figcaption class="mono" style="text-align:right">Refined directions</figcaption>
+          <figcaption class="caption">Refined directions</figcaption>
         </figure>
       </div>
 
-      <!-- Iteration -->
-      <section class="chapter">
-        <div class="chapter__label reveal">
-          <h2 class="h-md">Iteration</h2>
-        </div>
+      <section class="chapter" aria-labelledby="iteration">
+        <div class="chapter__label"><h2 id="iteration">Iteration</h2></div>
         <div class="chapter__body">
-          <p class="reveal">The final concept was compiled from the user needs combined with the results of a concept evaluation. In this phase the final prototype, CAD model, renderings and animations were completed for delivery.</p>
-          <p class="reveal">Autodesk Fusion CFD was used to run a series of virtual wind-tunnel tests. Iterating on the results step by step led to a noticeably more aerodynamic shape.</p>
+          <p>The final concept was compiled from the user needs combined with the results of a concept evaluation. In this phase the final prototype, CAD model, renderings and animations were completed for delivery.</p>
+          <p>Autodesk Fusion CFD was used to run a series of virtual wind-tunnel tests. Iterating on the results step by step led to a noticeably more aerodynamic shape.</p>
         </div>
       </section>
-    </div>
 
-    <div class="wrap reveal">
-      <div class="cad-stage">
-        <span class="mono tl">CAD model · Autodesk Fusion</span>
-        <img src="assets/img/vingen-cad.webp" width="2200" height="1847" loading="lazy" alt="CAD model of the final Vingen horse trailer concept in perspective view">
-        <span class="mono br">Final concept · Vingen</span>
-      </div>
-    </div>
-
-    <div class="full reveal">
-      <figure class="figure">
-        <img src="assets/img/vingen-cfd.webp" width="2200" height="1238" loading="lazy" alt="CFD flow visualization showing airflow around the trailer silhouette">
-        <figcaption class="wrap mono"><span>Airflow study in Fusion CFD</span><span>Wind-tunnel iteration</span></figcaption>
+      <figure class="reveal">
+        <div class="panel">
+          <img src="assets/img/vingen-cad.webp" width="2200" height="1847" loading="lazy" alt="CAD model of the final Vingen horse trailer concept in perspective view">
+        </div>
+        <figcaption class="caption">CAD model of the final concept in Autodesk Fusion</figcaption>
       </figure>
     </div>
 
-    <div class="full reveal">
-      <figure class="figure">
-        <img src="assets/img/vingen-road.webp" width="2200" height="1238" loading="lazy" alt="The Vingen trailer hitched to a black car on an elevated city road">
-        <figcaption class="wrap mono"><span>Final render</span><span>Vingen for Umesläp</span></figcaption>
-      </figure>
-    </div>
+    <figure class="full reveal">
+      <img src="assets/img/vingen-cfd.webp" width="2200" height="1238" loading="lazy" alt="CFD flow visualization showing airflow around the trailer silhouette">
+      <figcaption class="caption caption--split"><span>Airflow study in Fusion CFD</span><span>Wind-tunnel iteration</span></figcaption>
+    </figure>
 
-    <a class="next" href="normada.html" data-cursor="Next →">
-      <span class="mono">Next project</span>
+    <figure class="full reveal">
+      <img src="assets/img/vingen-road.webp" width="2200" height="1238" loading="lazy" alt="The Vingen trailer hitched to a black car on an elevated city road">
+      <figcaption class="caption caption--split"><span>Final render</span><span>Vingen for Umesläp</span></figcaption>
+    </figure>
+
+    <a class="next" href="normada.html">
       <h2>Normada</h2>
+      <p>Next project</p>
     </a>
   </main>
 
   <footer class="footer">
     <div class="wrap footer__inner">
-      <span>© <span data-year>2026</span> Joel Danson · Industrial design engineer</span>
+      <span>© <span data-year>2026</span> Joel Danson, industrial design engineer</span>
       <nav class="footer__links" aria-label="Footer">
         <a href="index.html#work">Work</a>
         <a href="index.html#about">About</a>
@@ -156,7 +133,6 @@
     </div>
   </footer>
 
-  <div class="cursor-bubble" aria-hidden="true"></div>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
