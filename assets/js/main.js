@@ -1,7 +1,6 @@
 (() => {
   document.documentElement.classList.add("js");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   const nav = document.querySelector(".nav");
   if (nav) {
@@ -31,20 +30,23 @@
       if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
     });
   }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
-  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  document.querySelectorAll(".reveal, .scribble").forEach((el) => io.observe(el));
 
-  // The beam leans a few degrees towards the pointer but always keeps the name lit.
-  const beam = document.querySelector(".beam");
-  if (beam && finePointer && !reduceMotion) {
-    const base = parseFloat(getComputedStyle(beam).getPropertyValue("--angle")) || 12;
-    window.addEventListener("pointermove", (e) => {
-      const r = beam.getBoundingClientRect();
-      const dx = e.clientX - r.left;
-      const dy = e.clientY - (r.top + r.height / 2);
-      let deg = (Math.atan2(dy, Math.max(dx, 60)) * 180) / Math.PI;
-      deg = Math.max(base - 5, Math.min(base + 6, deg));
-      beam.style.setProperty("--angle", deg.toFixed(2) + "deg");
-    }, { passive: true });
+  // Scrolling through the first screen turns the watch towards the visitor.
+  const hero = document.querySelector(".hero");
+  const film = hero && hero.querySelector("video");
+  if (film && !reduceMotion) {
+    hero.classList.add("is-scrub");
+    let ticking = false;
+    const scrub = () => {
+      ticking = false;
+      if (!film.duration) return;
+      const r = hero.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, -r.top / (r.height - window.innerHeight)));
+      film.currentTime = p * (film.duration - 0.05);
+    };
+    window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(scrub); } }, { passive: true });
+    film.addEventListener("loadedmetadata", scrub);
   }
 
   const covers = document.querySelectorAll("[data-parallax]");
@@ -61,15 +63,15 @@
 
   if (reduceMotion) document.querySelectorAll("video[autoplay]").forEach((v) => { v.removeAttribute("autoplay"); v.pause(); v.controls = true; });
 
-  const toast = document.querySelector(".copy-toast");
   document.querySelectorAll("[data-copy]").forEach((btn) => {
+    const label = btn.textContent;
     btn.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(btn.dataset.copy);
-        if (!toast) return;
-        toast.classList.add("is-on");
-        clearTimeout(toast._t);
-        toast._t = setTimeout(() => toast.classList.remove("is-on"), 2200);
+        btn.textContent = "Copied!";
+        btn.classList.add("is-copied");
+        clearTimeout(btn._t);
+        btn._t = setTimeout(() => { btn.textContent = label; btn.classList.remove("is-copied"); }, 2000);
       } catch {
         window.location.href = "mailto:" + btn.dataset.copy;
       }

@@ -113,40 +113,26 @@ h3 { font-size: var(--fs-h3); letter-spacing: -0.02em; line-height: 1.1; }
 .btn:active { transform: scale(.97); }
 @media (hover: hover) { .btn:hover { background: var(--orange); color: var(--ink); } }
 
-/* ---------- Hero ---------- */
-.hero { position: relative; min-height: 100svh; display: flex; align-items: center; padding-block: 6rem 4rem; overflow: hidden; }
-.hero__grid { position: relative; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: center; gap: 2rem; }
-.hero__lamp { position: relative; z-index: 2; width: min(100%, 500px); justify-self: start; }
-/* mirrored so the shade points at the name */
-.hero__lamp img { position: relative; z-index: 2; width: 100%; transform: scaleX(-1); }
-.beam {
-  --angle: -4deg;
-  position: absolute; z-index: 1; left: 61%; top: 39%;
-  width: 260vw; height: 130vw;
-  transform-origin: 0 50%;
-  transform: translateY(-50%) rotate(var(--angle));
-  background: var(--orange);
-  clip-path: polygon(0 48.6%, 100% 8%, 100% 92%, 0 51.4%);
-  pointer-events: none;
-  transition: transform 1.2s var(--ease);
-}
-.hero__text { position: relative; z-index: 3; padding-top: 4vw; }
-.hero__title { font-size: clamp(4rem, 13vw, 12.5rem); line-height: .86; letter-spacing: -.045em; }
+/* ---------- Hero: scrolling turns the watch ---------- */
+.hero { position: relative; }
+.hero__stage { min-height: 100svh; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: center; gap: clamp(2rem, 5vw, 5rem); padding-block: 6rem 3rem; }
+.js .hero.is-scrub { height: 190svh; }
+.js .hero.is-scrub .hero__stage { position: sticky; top: 0; height: 100svh; min-height: 0; }
+.hero__title { font-size: clamp(4rem, 12vw, 11.5rem); line-height: .86; letter-spacing: -.045em; }
 .hero__role { font-family: var(--f-display); font-weight: 600; font-size: var(--fs-h3); letter-spacing: -.02em; margin-top: 1.6rem; }
 .hero__sub { margin: 1rem 0 2.2rem; max-width: 40ch; }
-
-@media (min-width: 901px) and (max-width: 1200px) { .beam { --angle: -7deg; } }
+.hero__watch { justify-self: end; width: 100%; max-width: 560px; height: min(78svh, 700px); border-radius: var(--radius); overflow: hidden; background: #dfe4e9; }
+.hero__watch video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
 
 @media (max-width: 900px) {
-  .hero { flex-direction: column; align-items: stretch; min-height: auto; padding-top: 5.5rem; }
-  .hero__grid { grid-template-columns: 1fr; gap: 0; }
-  .hero__lamp { width: min(62vw, 330px); margin-bottom: -1rem; }
-  .beam { top: 36%; --angle: 66deg; clip-path: polygon(0 48.6%, 100% 40%, 100% 60%, 0 51.4%); }
-  /* on narrow screens the light lands on the name and stops at its baseline */
-  .hero__more { position: relative; background: var(--paper); margin: 0 calc(var(--pad) * -1) -4rem; padding: .1px var(--pad) 4rem; }
-  .hero__text { padding-top: 0; }
-  .hero__title { font-size: clamp(4rem, 22vw, 7.5rem); }
-  .hero__role { font-size: var(--fs-lead); }
+  .hero__stage { grid-template-columns: 1fr; align-content: start; gap: 1.5rem; padding-top: 5.5rem; }
+  .js .hero.is-scrub { height: 170svh; }
+  .js .hero.is-scrub .hero__stage { display: flex; flex-direction: column; padding-bottom: 1.25rem; }
+  .hero__title { font-size: clamp(3.5rem, 19vw, 7rem); }
+  .hero__role { font-size: var(--fs-lead); margin-top: 1rem; }
+  .hero__sub { margin: .6rem 0 1.4rem; }
+  .hero__watch { justify-self: stretch; max-width: none; height: 52svh; }
+  .js .hero.is-scrub .hero__watch { height: auto; flex: 1; min-height: 0; }
 }
 
 /* ---------- Sections ---------- */
@@ -186,7 +172,14 @@ h3 { font-size: var(--fs-h3); letter-spacing: -0.02em; line-height: 1.1; }
 .about__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
 .about__photo { max-width: 470px; justify-self: center; }
 .about__photo img { border-radius: var(--radius); }
-.about__hi { font-size: var(--fs-display); margin-bottom: 1.6rem; }
+.about__hi { position: relative; display: inline-block; font-size: var(--fs-display); margin-bottom: 1.9rem; }
+/* traced from the underline under "Formgivning" in the Vingen sketches */
+.scribble { position: absolute; left: -2%; bottom: -.04em; width: 112%; height: auto; overflow: visible; }
+.scribble path { fill: none; stroke: var(--orange); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+@media (prefers-reduced-motion: no-preference) {
+  .js .scribble path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .9s cubic-bezier(.65, 0, .35, 1) .2s; }
+  .js .scribble.is-visible path { stroke-dashoffset: 0; }
+}
 .about__text p { font-size: var(--fs-lead); line-height: 1.5; margin: 0 0 1.1rem; max-width: 44ch; }
 .about__text strong { font-weight: 500; color: var(--orange); }
 .about__text .about__hobbies { font-size: var(--fs-body); color: var(--night-2); margin-top: 1.6rem; }
@@ -212,12 +205,8 @@ h3 { font-size: var(--fs-h3); letter-spacing: -0.02em; line-height: 1.1; }
 }
 @media (hover: hover) { .contact__mail:hover { text-decoration-color: var(--orange); } }
 .contact__actions { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1rem 2rem; margin-top: 2.6rem; }
-.copy-toast {
-  position: fixed; left: 50%; bottom: 2rem; z-index: 90; transform: translate(-50%, 150%);
-  background: var(--ink); color: var(--paper); padding: .8rem 1.2rem; border-radius: 999px;
-  opacity: 0; visibility: hidden; transition: transform .45s var(--ease), opacity .3s ease, visibility .3s ease;
-}
-.copy-toast.is-on { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
+.btn--copy { min-width: 9.5rem; justify-content: center; }
+.btn--copy.is-copied { background: var(--orange); color: var(--ink); }
 
 .footer { background: var(--paper-2); padding-block: 2rem; font-size: var(--fs-small); }
 .footer__inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
