@@ -33,7 +33,7 @@
   }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
   document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
-  // The lamp's beam turns towards the pointer, within the swing of the real joint.
+  // The beam leans a few degrees towards the pointer but always keeps the name lit.
   const beam = document.querySelector(".beam");
   if (beam && finePointer && !reduceMotion) {
     const base = parseFloat(getComputedStyle(beam).getPropertyValue("--angle")) || 12;
@@ -42,7 +42,7 @@
       const dx = e.clientX - r.left;
       const dy = e.clientY - (r.top + r.height / 2);
       let deg = (Math.atan2(dy, Math.max(dx, 60)) * 180) / Math.PI;
-      deg = Math.max(base - 14, Math.min(base + 16, deg));
+      deg = Math.max(base - 5, Math.min(base + 6, deg));
       beam.style.setProperty("--angle", deg.toFixed(2) + "deg");
     }, { passive: true });
   }
@@ -77,7 +77,8 @@
   });
 
   const items = [...document.querySelectorAll("[data-lightbox]")];
-  if (items.length) {
+  let openLightbox = null;
+  const buildLightbox = () => {
     const lb = document.createElement("div");
     lb.className = "lightbox";
     lb.setAttribute("role", "dialog");
@@ -116,7 +117,6 @@
       lastFocus?.focus();
     };
 
-    items.forEach((el, i) => el.addEventListener("click", () => open(i)));
     lb.querySelector(".lightbox__close").addEventListener("click", close);
     lb.querySelector(".lightbox__nav--prev").addEventListener("click", () => show(index - 1));
     lb.querySelector(".lightbox__nav--next").addEventListener("click", () => show(index + 1));
@@ -133,7 +133,13 @@
         buttons[next].focus();
       }
     });
-  }
+    return open;
+  };
+  // Built on first use so its controls are not in the page until someone opens a render.
+  items.forEach((el, i) => el.addEventListener("click", () => {
+    openLightbox = openLightbox || buildLightbox();
+    openLightbox(i);
+  }));
 
   document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
 })();
