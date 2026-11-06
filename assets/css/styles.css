@@ -306,7 +306,8 @@ h3 { font-size: var(--fs-h3); letter-spacing: -0.02em; line-height: 1.1; }
 .panel img { width: min(100%, 860px); margin-inline: auto; }
 
 .full { padding-inline: clamp(.5rem, 1.5vw, 1.25rem); margin-block: clamp(1rem, 3vw, 2rem); }
-.full img { width: 100%; border-radius: var(--radius); }
+.full img, .full video { display: block; width: 100%; height: auto; border-radius: var(--radius); background: #111; }
+.full--video { margin-bottom: clamp(4rem, 9vw, 6rem); }
 .full .caption { padding-inline: calc(var(--pad) - clamp(.5rem, 1.5vw, 1.25rem)); }
 @media (max-width: 760px) { .full .caption { padding-inline: 1rem; } .caption--split { flex-direction: column; gap: .15rem; } }
 
