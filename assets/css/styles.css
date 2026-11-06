@@ -271,6 +271,33 @@ h3 { font-size: var(--fs-h3); letter-spacing: -0.02em; line-height: 1.1; }
 .sketches--three img { width: 100%; aspect-ratio: 4 / 4.4; object-fit: cover; border-radius: var(--radius); background: var(--paper-2); }
 @media (max-width: 760px) { .sketches figure:nth-child(n) { grid-column: 1 / -1; } }
 
+.questions { margin: 0 0 1.6rem; padding-left: 1.4rem; display: grid; gap: .6rem; font-size: var(--fs-lead); line-height: 1.4; max-width: 52ch; }
+.questions li::marker { color: var(--ink-2); font-weight: 500; }
+.chapter__body > .after-list { margin-top: 2.4rem; }
+.features { margin: 0; padding-left: 1.2rem; display: grid; gap: .7rem; max-width: 56ch; }
+.features li::marker { color: var(--orange); }
+
+.concepts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-block: 0 clamp(4rem, 9vw, 6rem); }
+.concepts img { width: 100%; aspect-ratio: 1400 / 990; object-fit: contain; background: #fff; border-radius: var(--radius); }
+.concepts b, .pair b { display: block; font-family: var(--f-display); font-weight: 600; font-size: var(--fs-lead); color: var(--ink); margin-bottom: .2rem; }
+
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: end; margin-block: 0 1.5rem; }
+.pair img { width: 100%; aspect-ratio: 4 / 3.2; object-fit: contain; background: #fff; border-radius: var(--radius); }
+.pair--cad { margin-bottom: clamp(4rem, 9vw, 6rem); }
+.cfd { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-block: 0 clamp(4rem, 9vw, 6rem); }
+.cfd img { width: 100%; aspect-ratio: 2 / 1.05; object-fit: cover; border-radius: var(--radius); background: var(--paper-2); }
+@media (max-width: 760px) { .concepts, .pair, .cfd { grid-template-columns: 1fr; } }
+
+.eval { margin-top: 2rem; overflow-x: auto; }
+.eval table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.eval caption { text-align: left; margin-bottom: .8rem; }
+.eval th, .eval td { padding: .7rem .8rem; text-align: center; border-bottom: 1px solid rgba(28, 27, 25, .12); }
+.eval th[scope="row"], .eval thead th:first-child { text-align: left; font-weight: 500; }
+.eval thead th { font-family: var(--f-display); font-weight: 600; font-size: var(--fs-small); color: var(--ink-2); }
+.eval .win { background: rgba(255, 106, 43, .14); color: var(--ink); }
+.eval thead .win { color: var(--ink); }
+.eval tfoot th, .eval tfoot td { border-bottom: 0; font-family: var(--f-display); font-weight: 700; font-size: var(--fs-lead); }
+
 .panel { background: var(--paper-2); border-radius: var(--radius); padding: clamp(1.5rem, 5vw, 4rem); }
 .panel img { width: min(100%, 860px); margin-inline: auto; }
 
