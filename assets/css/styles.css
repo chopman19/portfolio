@@ -286,6 +286,9 @@ h3 { font-size: var(--fs-h3); letter-spacing: -0.02em; line-height: 1.1; }
 .proto { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 3vw, 3rem); align-items: end; margin-block: 0 clamp(4rem, 9vw, 6rem); }
 .proto img { width: 100%; height: auto; }
 @media (max-width: 760px) { .proto { grid-template-columns: 1fr; gap: 2.5rem; } }
+.render-wide { margin: 0 0 1.5rem; }
+.render-wide img { width: 100%; border-radius: var(--radius); background: #111; }
+.pair--photo img { aspect-ratio: 4 / 3; object-fit: cover; background: #111; }
 .final-cad { margin: 0 0 1.5rem; }
 .final-cad img { width: 100%; background: #fff; border-radius: var(--radius); padding: clamp(1rem, 4vw, 3.5rem); }
 .cfd { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-block: 0 clamp(4rem, 9vw, 6rem); }
