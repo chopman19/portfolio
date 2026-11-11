@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CAD, mechanical design | Joel Danson</title>
+  <meta name="description" content="Mechanical CAD work by Joel Danson in Autodesk Fusion, starting with a single-cylinder piston assembly you can turn in the browser.">
+  <meta name="theme-color" content="#f4f4f2">
+  <meta property="og:title" content="CAD, mechanical design | Joel Danson">
+  <meta property="og:description" content="A piston, conrod and crank modelled in Autodesk Fusion. Drag the model to turn the crank.">
+  <meta property="og:image" content="https://joeldanson.com/assets/img/og-cad.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Render of a single-cylinder piston, connecting rod and counterweighted crank">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:url" content="https://joeldanson.com/cad.html">
+  <meta property="og:type" content="article">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+      }
+    }
+  </script>
+  <!-- Fetch the model, the viewer code and the Draco decoder in parallel instead of one after another -->
+  <link rel="preload" href="assets/models/piston-assembly.glb" as="fetch" type="model/gltf-binary" crossorigin>
+  <link rel="modulepreload" href="assets/js/cad-viewer.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/loaders/GLTFLoader.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/loaders/DRACOLoader.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/controls/OrbitControls.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/environments/RoomEnvironment.js">
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/utils/BufferGeometryUtils.js">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/libs/draco/gltf/draco_wasm_wrapper.js" as="fetch" crossorigin>
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/libs/draco/gltf/draco_decoder.wasm" as="fetch" crossorigin>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="logo" href="index.html">Joel Danson</a>
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="index.html#work" aria-current="page">Work</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="case-hero">
+      <div class="wrap">
+        <h1>CAD</h1>
+        <p class="lede">Mechanical parts and assemblies modelled in Autodesk Fusion. Each one loads as a live model, so you can pick it up and see how it works.</p>
+        <ol class="cad-index">
+          <li><a href="#piston-assembly"><span>01</span>Piston assembly<em>Interactive</em></a></li>
+        </ol>
+      </div>
+    </section>
+
+    <article class="cad-project" id="piston-assembly" aria-labelledby="piston-title" data-cad-viewer>
+      <div class="wrap cad-project__head">
+        <span class="cad-project__num">01</span>
+        <h2 id="piston-title">Piston assembly</h2>
+        <p>A single-cylinder piston, connecting rod and counterweighted crank. Drag the model and the rod and piston follow the crank.</p>
+      </div>
+
+      <figure class="full cad-stage">
+        <div class="viewer" data-model="assets/models/piston-assembly.glb" data-label="3D model of the piston assembly. Drag to turn the crank.">
+          <img class="viewer__poster" src="assets/img/cad-piston.webp" width="1920" height="1080" alt="Render of the piston, connecting rod and crank, with the crank turned 55 degrees past top dead centre">
+          <dl class="viewer__readout">
+            <div><dt>Crank angle</dt><dd data-out="angle">55°</dd></div>
+            <div><dt>Piston travel</dt><dd><span data-out="travel">0.0</span> mm</dd></div>
+            <div><dt>Rod angle</dt><dd data-out="rod">0.0°</dd></div>
+          </dl>
+          <p class="viewer__hint" aria-hidden="true">Drag to turn the crank</p>
+          <p class="viewer__status" role="status">Loading 3D model</p>
+        </div>
+        <div class="viewer-ui" hidden>
+          <div class="seg" role="group" aria-label="What dragging does">
+            <button type="button" data-mode="turn" aria-pressed="true">Turn crank</button>
+            <button type="button" data-mode="orbit" aria-pressed="false">Orbit view</button>
+          </div>
+          <label class="viewer-ui__scrub">
+            <span>Crank angle</span>
+            <input class="viewer-ui__angle" type="range" min="0" max="359" step="1" value="55">
+          </label>
+          <div class="viewer-ui__actions">
+            <button class="chip" type="button" data-action="play">Pause</button>
+            <button class="chip" type="button" data-action="reset">Reset<span class="wide-only"> view</span></button>
+          </div>
+        </div>
+        <figcaption class="caption caption--split"><span>Live model: the piston position is calculated from the crank angle every frame</span><span>Modelled in Autodesk Fusion</span></figcaption>
+      </figure>
+
+      <div class="wrap">
+        <dl class="facts">
+          <div><dt>Software</dt><dd>Autodesk Fusion</dd></div>
+          <div><dt>Bore × stroke</dt><dd>70 × 80 mm</dd></div>
+          <div><dt>Rod length</dt><dd>120 mm, centre to centre</dd></div>
+          <div><dt>Parts</dt><dd>17, in three sub-assemblies</dd></div>
+        </dl>
+
+        <div class="cad-shots">
+          <figure class="reveal">
+            <button type="button" data-lightbox data-title="The assembly in Autodesk Fusion"><img src="assets/img/cad-piston-fusion.webp" width="465" height="788" loading="lazy" alt="Screenshot of the piston assembly in Autodesk Fusion, with the crank at top dead centre"></button>
+            <figcaption class="caption">The assembly in Autodesk Fusion</figcaption>
+          </figure>
+          <figure class="reveal">
+            <button type="button" data-lightbox data-title="Side view, crank at 90°"><img src="assets/img/cad-piston-side.webp" width="1200" height="1500" loading="lazy" alt="Side view render along the crankshaft, with the crank at 90 degrees and the connecting rod at its steepest angle"></button>
+            <figcaption class="caption">Side view, crank at 90°</figcaption>
+          </figure>
+          <figure class="reveal">
+            <button type="button" data-lightbox data-title="Crank and big end"><img src="assets/img/cad-piston-crank.webp" width="1200" height="1500" loading="lazy" alt="Close-up render of the counterweighted crank webs and the connecting rod's bolted big end on the crankpin"></button>
+            <figcaption class="caption">Crank and big end</figcaption>
+          </figure>
+        </div>
+      </div>
+    </article>
+
+    <a class="next" href="vingen.html">
+      <h2>Vingen</h2>
+      <p>Back to the start</p>
+    </a>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <span>© <span data-year>2026</span> Joel Danson, industrial design engineer</span>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#about">About</a>
+        <a href="mailto:joel.o.danson@gmail.com">E-mail</a>
+        <a href="https://www.linkedin.com/in/joel-danson-b27b8b195/" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/cad-viewer.js"></script>
+  <script>
+    // Browsers refuse to run module scripts from file://, so the viewer would wait forever.
+    if (location.protocol === "file:") document.querySelectorAll(".viewer__status").forEach((s) => (s.textContent = "Open this page through a web server to load the 3D model"));
+  </script>
+</body>
+</html>

@@ -369,3 +369,62 @@ button.gallery__item { cursor: zoom-in; }
   .lost__lamp { width: min(62vw, 320px); }
   .lost__beam { top: 36%; transform: translateY(-50%) rotate(62deg); clip-path: polygon(0 48.6%, 100% 40%, 100% 60%, 0 51.4%); }
 }
+
+/* ---------- CAD page: live 3D viewer ---------- */
+.cad-index { list-style: none; margin: clamp(2rem, 4vw, 3rem) 0 0; padding: 0; border-top: 1px solid rgba(28, 27, 25, .12); max-width: 40rem; }
+.cad-index a { display: flex; align-items: baseline; gap: 1.2rem; padding: 1rem 0; border-bottom: 1px solid rgba(28, 27, 25, .12); font-family: var(--f-display); font-weight: 600; font-size: var(--fs-lead); letter-spacing: -.01em; }
+.cad-index span { font-size: var(--fs-small); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.cad-index em { margin-left: auto; font-style: normal; font-family: var(--f-text); font-weight: 500; font-size: var(--fs-small); color: var(--ink-2); }
+@media (hover: hover) { .cad-index a:hover em { color: var(--ink); } .cad-index a:hover { text-decoration: underline; text-decoration-color: var(--orange); text-decoration-thickness: 2px; text-underline-offset: .2em; } }
+
+.cad-project { padding-block: clamp(3rem, 7vw, 5rem) 0; scroll-margin-top: 4rem; }
+.cad-project__head { display: grid; grid-template-columns: auto 1fr; column-gap: 1.2rem; align-items: baseline; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+.cad-project__num { font-family: var(--f-display); font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.cad-project__head p { grid-column: 2; margin-top: 1rem; max-width: 52ch; }
+.cad-shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-bottom: clamp(4rem, 9vw, 6rem); }
+.cad-shots button { display: block; width: 100%; cursor: zoom-in; border-radius: var(--radius); overflow: hidden; background: #fff; }
+.cad-shots img { width: 100%; aspect-ratio: 4 / 5; object-fit: contain; transition: transform .9s var(--ease); }
+@media (hover: hover) { .cad-shots button:hover img { transform: scale(1.03); } }
+@media (max-width: 760px) { .cad-shots { grid-template-columns: 1fr; gap: 2rem; } }
+
+.cad-stage { margin-bottom: 0; }
+.viewer { position: relative; aspect-ratio: 16 / 9; max-height: 82svh; width: 100%; border-radius: var(--radius); overflow: hidden; background: var(--paper-2); touch-action: none; user-select: none; -webkit-user-select: none; }
+.viewer canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; outline: none; }
+.viewer.is-dragging canvas { cursor: grabbing; }
+.viewer__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .6s ease; pointer-events: none; }
+.viewer.is-ready .viewer__poster { opacity: 0; }
+
+.viewer__readout { position: absolute; top: clamp(.8rem, 2vw, 1.5rem); left: clamp(.8rem, 2vw, 1.5rem); margin: 0; display: grid; gap: .5rem; pointer-events: none; opacity: 0; transition: opacity .4s ease .3s; }
+.viewer.is-ready .viewer__readout { opacity: 1; }
+.viewer__readout dt { font-size: .75rem; color: var(--ink-2); }
+.viewer__readout dd { margin: 0; font-family: var(--f-display); font-weight: 600; font-size: 1.35rem; letter-spacing: -.01em; line-height: 1.1; font-variant-numeric: tabular-nums; min-width: 6ch; }
+
+.viewer__hint, .viewer__status { position: absolute; left: 50%; bottom: clamp(.8rem, 2vw, 1.5rem); transform: translateX(-50%); margin: 0; padding: .5rem 1rem; border-radius: 999px; font-size: var(--fs-small); font-weight: 500; white-space: nowrap; pointer-events: none; }
+.viewer__hint { background: var(--ink); color: var(--paper); opacity: 0; transition: opacity .4s ease; }
+.viewer.is-ready:not(.is-touched) .viewer__hint { opacity: 1; transition-delay: .8s; }
+.viewer__status { background: var(--paper); color: var(--ink-2); }
+.viewer__status:empty { display: none; }
+
+.viewer-ui { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.5rem; margin-top: 1rem; padding-inline: calc(var(--pad) - clamp(.5rem, 1.5vw, 1.25rem)); }
+.viewer-ui[hidden] { display: none; }
+.seg { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--paper-2); }
+.seg button, .chip { min-height: 40px; padding: 0 1rem; border-radius: 999px; font-size: var(--fs-small); font-weight: 500; transition: background-color .2s ease, color .2s ease; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.chip { background: var(--paper-2); min-height: 48px; padding: 0 1.2rem; }
+@media (hover: hover) { .seg button[aria-pressed="false"]:hover { background: var(--paper); } .chip:hover { background: var(--ink); color: var(--paper); } }
+.viewer-ui__scrub { flex: 1 1 14rem; display: flex; align-items: center; gap: .9rem; font-size: var(--fs-small); color: var(--ink-2); }
+.viewer-ui__scrub input { flex: 1; min-width: 0; accent-color: var(--orange); height: 44px; }
+.viewer-ui__actions { display: flex; gap: .5rem; }
+
+@media (max-width: 760px) {
+  .viewer { aspect-ratio: 1 / 1.05; }
+  .viewer__readout { gap: .35rem; }
+  .viewer__readout dd { font-size: 1.1rem; }
+  .viewer-ui { padding-inline: .25rem; gap: .6rem .4rem; justify-content: space-between; }
+  .viewer-ui__scrub { flex-basis: 100%; order: -1; }
+  .seg button, .chip { padding: 0 .8rem; }
+  .viewer-ui__actions { gap: .4rem; }
+  .wide-only { display: none; }
+  .cad-project__head { grid-template-columns: 1fr; }
+  .cad-project__head p { grid-column: 1; }
+}
